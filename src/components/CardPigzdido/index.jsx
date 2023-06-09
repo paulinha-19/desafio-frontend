@@ -38,7 +38,7 @@ const CardSubtitle = styled(TextCard)`
   font-weight: 400;
 `;
 
-export const Card = ({ imageSrc, title, subtitle }) => {
+export const CardPigzdido = ({ imageSrc, title, subtitle }) => {
   return (
     <CardWrapper>
       <CardImage src={imageSrc} alt="Card Image" />

@@ -1,6 +1,6 @@
 import React from "react";
 import { Title, TextContainer } from "../../styles/Title";
-import { Card } from "../Card";
+import { CardPigzdido, Container } from "../index";
 import storeFront from "../../assets/storefront.png";
 import smartphone from "../../assets/smartphone.png";
 import pigzGestao from "../../assets/pigz-gestao.png";
@@ -8,7 +8,7 @@ import print from "../../assets/print.png";
 
 export const NovoPigzdido = () => {
   return (
-    <>
+    <Container>
       <TextContainer>
         <Title
           textColor="#000"
@@ -26,27 +26,27 @@ export const NovoPigzdido = () => {
           gap: 32,
         }}
       >
-        <Card
+        <CardPigzdido
           imageSrc={storeFront}
           title="Marketplace"
           subtitle="Pra sua loja vender mais"
         />
-        <Card
+        <CardPigzdido
           imageSrc={smartphone}
           title="É fácil e rápido"
           subtitle="Fazer um pedido no Pigz"
         />
-        <Card
+        <CardPigzdido
           imageSrc={pigzGestao}
           title="Pigz Gestão"
           subtitle="Você no controle, sempre"
         />
-        <Card
+        <CardPigzdido
           imageSrc={print}
           title="Vias de impressão"
           subtitle="Personalizáveis"
         />
       </div>
-    </>
+    </Container>
   );
 };

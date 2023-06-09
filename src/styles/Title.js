@@ -18,3 +18,21 @@ export const TextContainer = styled.div`
   @media ${device.xs} {
   }
 `;
+
+export const TitleResponsive = styled(Title)`
+  padding: 40px;
+  margin: 0 auto;
+  color: #333333;
+  @media ${device.sm} {
+    max-width: 334px;
+  }
+`;
+
+export const SubtitleResponsive = styled(Subtitle)`
+  max-width: 600px;
+  color: #333333;
+  margin: 0 auto;
+  @media ${device.sm} {
+    max-width: 286px;
+  }
+`;
