@@ -5,6 +5,7 @@ import storeFront from "../../assets/storefront.png";
 import smartphone from "../../assets/smartphone.png";
 import pigzGestao from "../../assets/pigz-gestao.png";
 import print from "../../assets/print.png";
+import { Informativo } from "../Informativo";
 
 export const NovoPigzdido = () => {
   return (
@@ -13,7 +14,12 @@ export const NovoPigzdido = () => {
         <Title
           textColor="#000"
           fontWeight="700"
-          style={{ fontSize: "32px", textAlign: "center", marginTop: "100px" }}
+          style={{
+            fontSize: "32px",
+            textAlign: "center",
+            marginTop: "100px",
+            padding: "0 40px",
+          }}
         >
           Você tem um novo Pigzdido!
         </Title>
@@ -24,6 +30,7 @@ export const NovoPigzdido = () => {
           flexWrap: "wrap",
           justifyContent: "center",
           gap: 32,
+          padding: "0 30px",
         }}
       >
         <CardPigzdido
@@ -47,6 +54,12 @@ export const NovoPigzdido = () => {
           subtitle="Personalizáveis"
         />
       </div>
+      <Informativo
+        title="Tudo que você precisa por apenas R$199/mês"
+        subtitle="Tenha todas as funcionalidades Pigz sem taxa de adesão, sem comissão por cada venda, sem letrinhas miúdas."
+        marginTop="80px"
+        marginBottom="20px"
+      />
     </Container>
   );
 };

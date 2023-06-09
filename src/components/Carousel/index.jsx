@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { CarouselCard } from "./CarouselCard";
-import pigzMarketplace from "../../assets/pigz-marketplace.png";
-import laptopCelular from "../../assets/laptop-celular.png";
-import entregador from "../../assets/entregador.png";
-import pagamentoOnline from "../../assets/pagamento-online.png";
-
+import { Informativo } from "../Informativo";
+import { cards } from "../../data/db";
 const CarouselWrapper = styled.div`
   display: flex;
   justify-content: center;
+  padding: 0 16px;
 `;
 
 const CardContainer = styled.div`
@@ -21,7 +19,7 @@ const CardContainer = styled.div`
 const CardIndicators = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 36px;
 `;
 const Indicator = styled.div`
   width: 88px;
@@ -34,54 +32,36 @@ const Indicator = styled.div`
 
 export const Carousel = () => {
   const [currentCard, setCurrentCard] = useState(0);
-  const cards = [
-    {
-      title: "Pigz Marketplace",
-      subtitle:
-        "Além de uma página exclusiva, com o Pigz Marketplace sua loja terá mais visibilidade, no app e no site. Uma vitrine com milhares de clientes todos os dias, pra vender muito mais.",
-      image: pigzMarketplace,
-    },
-    {
-      title: "Pigz Gestão",
-      subtitle:
-        "Acompanhe suas vendas em tempo real, no computador ou no celular, de onde estiver. Faça alterações de preços e disponibilidade de produtos rapidamente, como deve ser.",
-      image: laptopCelular,
-    },
-    {
-      title: "Gestão de entregadores",
-      subtitle:
-        "A ferramenta ideal pra quem tem entrega própria. Controle de entregas por motoboy, geração de relatórios por entregas e por taxas de entrega, individualmente.",
-      image: entregador,
-    },
-    {
-      title: "Pagamento on-line",
-      subtitle:
-        "Segurança e agilidade para receber e entregar pedidos. Seus clientes pagam com Pix ou cartão de crédito pelo app, e o entregador nem precisa levar a maquininha de cartão.",
-      image: pagamentoOnline
-    },
-  ];
   const handleCardChange = (index) => {
     setCurrentCard(index);
   };
 
   return (
-    <CarouselWrapper>
-      <CardContainer>
-        <CardIndicators>
-          {cards.map((_, index) => (
-            <Indicator
-              key={index}
-              active={index === currentCard}
-              onClick={() => handleCardChange(index)}
-            />
-          ))}
-        </CardIndicators>
-        <CarouselCard
-          title={cards[currentCard].title}
-          subtitle={cards[currentCard].subtitle}
-          image={cards[currentCard].image}
-        />
-      </CardContainer>
-    </CarouselWrapper>
+    <>
+      <CarouselWrapper>
+        <CardContainer>
+          <CardIndicators>
+            {cards.map((_, index) => (
+              <Indicator
+                key={index}
+                active={index === currentCard}
+                onClick={() => handleCardChange(index)}
+              />
+            ))}
+          </CardIndicators>
+          <CarouselCard
+            title={cards[currentCard].title}
+            subtitle={cards[currentCard].subtitle}
+            image={cards[currentCard].image}
+          />
+        </CardContainer>
+      </CarouselWrapper>
+      <Informativo
+        title="E mais: suporte que realmente funciona!"
+        subtitle="Respostas automáticas e robôs? Aqui não. Nossa equipe está sempre disponível pra ajudar você e seus clientes."
+        marginTop="200px"
+        marginBottom="20px"
+      />
+    </>
   );
 };

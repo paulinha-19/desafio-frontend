@@ -2,9 +2,7 @@ import {
   Header,
   FormSection,
   NovoPigzdido,
-  TudoQueVocePrecisa,
   Carousel,
-  EMaisSuporte,
 } from "./components/index";
 import GlobalStyle from "./styles/Global";
 
@@ -15,9 +13,7 @@ function App() {
       <Header />
       <FormSection />
       <NovoPigzdido />
-      <TudoQueVocePrecisa />
       <Carousel />
-      <EMaisSuporte />
     </>
   );
 }

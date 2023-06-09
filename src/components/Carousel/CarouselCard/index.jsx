@@ -8,7 +8,7 @@ const CardWrapper = styled.div`
   background: linear-gradient(224deg, #fa641e 0%, #ff881f 100%) 0% 0% no-repeat
     padding-box padding-box transparent;
   border-radius: 64px;
-  overflow: hidden;;
+  overflow: hidden;
 `;
 const CardContent = styled.div`
   padding: 40px;

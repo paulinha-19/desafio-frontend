@@ -20,7 +20,6 @@ export const TextContainer = styled.div`
 `;
 
 export const TitleResponsive = styled(Title)`
-  padding: 40px;
   margin: 0 auto;
   color: #333333;
   @media ${device.sm} {

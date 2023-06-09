@@ -3,24 +3,30 @@ import { TitleResponsive, SubtitleResponsive } from "../../styles/Title";
 import styled from "styled-components";
 import { Container } from "../index";
 
-const ContainerTudoQueVocePrecisa = styled.div`
+const ContainerInformativo = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
 `;
 
-export const TudoQueVocePrecisa = () => {
+export const Informativo = ({ title, subtitle, marginTop, marginBottom }) => {
   return (
     <Container>
-      <ContainerTudoQueVocePrecisa>
-        <TitleResponsive fontWeight="700" style={{ fontSize: "32px" }}>
-          Tudo que você precisa por apenas R$199/mês
+      <ContainerInformativo>
+        <TitleResponsive
+          fontWeight="700"
+          style={{
+            fontSize: "32px",
+            marginTop: marginTop || 0,
+            marginBottom: marginBottom || 0,
+          }}
+        >
+          {title}
         </TitleResponsive>
         <SubtitleResponsive fontWeight="400" style={{ fontSize: "16px" }}>
-          Tenha todas as funcionalidades Pigz sem taxa de adesão, sem comissão
-          por cada venda, sem letrinhas miúdas.
+          {subtitle}
         </SubtitleResponsive>
-      </ContainerTudoQueVocePrecisa>
+      </ContainerInformativo>
     </Container>
   );
 };

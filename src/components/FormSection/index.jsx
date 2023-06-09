@@ -12,10 +12,7 @@ const MainContainer = styled.div`
     padding-box padding-box transparent;
   display: flex;
   align-items: center;
-  padding: 20px;
-  @media ${device.xs} {
-    padding: 10px;
-  }
+  padding-top: 16px;
 `;
 
 const ContentContainer = styled.div`
@@ -86,7 +83,7 @@ const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin: 50px auto;
+  margin: 40px auto 90px auto;
   max-width: 500px;
   border-radius: 32px;
   border: 1px solid #cccccc;
