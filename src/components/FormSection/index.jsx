@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import burguer2 from "../../assets/burguer_2.png";
+import pigzPigz from "../../assets/pigz-pigz.png";
 import { device } from "../../styles/Breakpoints";
 import { Container } from "../Container";
+import { Title, TextContainer, Subtitle } from "../../styles/Title";
 
 const MainContainer = styled.div`
   position: relative;
@@ -24,52 +26,6 @@ const ContentContainer = styled.div`
   @media ${device.sm} {
     align-items: center;
     background-color: aqua;
-  }
-`;
-
-const TextContainer = styled.div`
-  color: #fff;
-  @media ${device.sm} {
-    background-color: #ec2c13;
-  }
-  @media ${device.xs} {
-    background-color: beige;
-  }
-`;
-
-const Title = styled.p`
-  font-weight: 700;
-  font-size: 60px;
-  @media ${device.md} {
-    font-size: 40px;
-  }
-
-  @media ${device.sm} {
-    font-size: 40px;
-  }
-
-  @media ${device.xs} {
-    font-size: 40x;
-  }
-`;
-
-const Subtitle = styled.p`
-  font-weight: 400;
-  font-size: 20px;
-  width: 100%;
-  @media ${device.md} {
-    font-size: 16px;
-    width: auto;
-  }
-
-  @media ${device.sm} {
-    font-size: 16px;
-    width: auto;
-  }
-
-  @media ${device.xs} {
-    font-size: 16px;
-    width: auto;
   }
 `;
 
@@ -204,7 +160,7 @@ const FormButton = styled.button`
 const AbsoluteImage = styled.div`
   position: absolute;
   transform: translateX(-50%);
-  bottom: 0;
+  bottom: -80px;
   left: 50%;
 `;
 
@@ -226,8 +182,18 @@ export const FormSection = () => {
       <Container className="CONTAINER">
         <ContentContainer className="CONTENT CONTAINER">
           <TextContainer className="TEXT CONTAINER">
-            <Title>Pigz: tudo que você precisa pra vender ainda mais!</Title>
-            <Subtitle>
+            <Title
+              textColor="#fff"
+              fontWeight="700"
+              style={{ fontSize: "40px" }}
+            >
+              Pigz: tudo que você precisa pra vender ainda mais!
+            </Title>
+            <Subtitle
+              textColor="#fff"
+              fontWeight="400"
+              style={{ fontSize: "16px" }}
+            >
               Temos uma equipe ansiosa para cadastrar seus produtos no Pigz
               Marketplace e deixar sua loja prontinha para iniciar as vendas.
             </Subtitle>
@@ -385,10 +351,10 @@ export const FormSection = () => {
               <FormButton onClick={handleFinish}>Concluir</FormButton>
             </>
           )}
-          {/* <AbsoluteImage>
-            <img src={pigz} alt="Pigz-Pigz" />
-          </AbsoluteImage> */}
         </FormContainer>
+          <AbsoluteImage>
+            <img src={pigzPigz} alt="Pigz-Pigz" />
+          </AbsoluteImage>
       </Container>
     </MainContainer>
   );

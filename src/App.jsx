@@ -1,4 +1,9 @@
-import { Header, Container, FormSection } from "./components/index";
+import {
+  Header,
+  FormSection,
+  NovoPigzdido,
+  TudoQueVocePrecisa,
+} from "./components/index";
 import GlobalStyle from "./styles/Global";
 
 function App() {
@@ -7,6 +12,8 @@ function App() {
       <GlobalStyle />
       <Header />
       <FormSection />
+      <NovoPigzdido />
+      <TudoQueVocePrecisa />
     </>
   );
 }
