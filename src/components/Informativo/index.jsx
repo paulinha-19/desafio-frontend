@@ -1,5 +1,5 @@
 import React from "react";
-import { TitleResponsive, SubtitleResponsive } from "../../styles/Title";
+import { TitleResponsive, SubtitleResponsive } from "../../styles/Text";
 import styled from "styled-components";
 import { Container } from "../index";
 

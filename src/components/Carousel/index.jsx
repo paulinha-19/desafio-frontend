@@ -2,18 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { CarouselCard } from "./CarouselCard";
 import { Informativo } from "../Informativo";
-import { cards } from "../../data/db";
+import { cards } from "../../data/cardCarousel";
+import { CardContainer } from "../../styles/Card";
+
 const CarouselWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding: 0 16px;
-`;
-
-const CardContainer = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: 382px;
-  height: 400px;
 `;
 
 const CardIndicators = styled.div`

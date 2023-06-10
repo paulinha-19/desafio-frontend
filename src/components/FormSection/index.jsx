@@ -4,7 +4,7 @@ import burguer2 from "../../assets/burguer_2.png";
 import pigzPigz from "../../assets/pigz-pigz.png";
 import { device } from "../../styles/Breakpoints";
 import { Container } from "../Container";
-import { Title, TextContainer, Subtitle } from "../../styles/Title";
+import { Title, TextContainer, Subtitle } from "../../styles/Text";
 
 const MainContainer = styled.div`
   position: relative;
@@ -12,7 +12,7 @@ const MainContainer = styled.div`
     padding-box padding-box transparent;
   display: flex;
   align-items: center;
-  padding-top: 16px;
+  padding: 16px;
 `;
 
 const ContentContainer = styled.div`
@@ -175,10 +175,10 @@ export const FormSection = () => {
   };
 
   return (
-    <MainContainer className="MAINCONTAINER">
-      <Container className="CONTAINER">
-        <ContentContainer className="CONTENT CONTAINER">
-          <TextContainer className="TEXT CONTAINER">
+    <MainContainer>
+      <Container>
+        <ContentContainer>
+          <TextContainer>
             <Title
               textColor="#fff"
               fontWeight="700"
@@ -349,9 +349,9 @@ export const FormSection = () => {
             </>
           )}
         </FormContainer>
-          <AbsoluteImage>
-            <img src={pigzPigz} alt="Pigz-Pigz" />
-          </AbsoluteImage>
+        <AbsoluteImage>
+          <img src={pigzPigz} alt="Pigz-Pigz" />
+        </AbsoluteImage>
       </Container>
     </MainContainer>
   );

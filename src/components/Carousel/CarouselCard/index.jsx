@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Title, CardContent, Subtitle } from "../../../styles/Card";
 
 const CardWrapper = styled.div`
   position: relative;
@@ -9,21 +10,6 @@ const CardWrapper = styled.div`
     padding-box padding-box transparent;
   border-radius: 64px;
   overflow: hidden;
-`;
-const CardContent = styled.div`
-  padding: 40px;
-  text-align: center;
-`;
-const Title = styled.h3`
-  text-align: center;
-  font-size: 24px;
-  font-weight: 600;
-  color: #333333;
-`;
-const Subtitle = styled.p`
-  font-size: 15px;
-  font-weight: 300;
-  color: #fff;
 `;
 
 const CardImage = styled.img`
@@ -39,7 +25,9 @@ export const CarouselCard = ({ title, subtitle, image }) => {
       <Title>{title}</Title>
       <CardWrapper>
         <CardContent>
-          <Subtitle>{subtitle}</Subtitle>
+          <Subtitle textColor="#fff" style={{ margin: "0" }}>
+            {subtitle}
+          </Subtitle>
         </CardContent>
         <CardImage src={image} alt="Card Image" />
       </CardWrapper>
