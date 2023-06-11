@@ -3,7 +3,7 @@ import {
   FormSection,
   NovoPigzdido,
   Carousel,
-  SectionCardButton
+  SectionCardButton,
 } from "./components/index";
 import GlobalStyle from "./styles/Global";
 
@@ -15,7 +15,7 @@ function App() {
       <FormSection />
       <NovoPigzdido />
       <Carousel />
-      <SectionCardButton/>
+      <SectionCardButton />
     </>
   );
 }

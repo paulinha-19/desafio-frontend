@@ -2,92 +2,80 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import burguer2 from "../../assets/burguer_2.png";
 import pigzPigz from "../../assets/pigz-pigz.png";
-import { device } from "../../styles/Breakpoints";
-import { Container } from "../Container";
-import { Title, TextContainer, Subtitle } from "../../styles/Text";
+import { Container, Box, Typography } from "@mui/material";
 
-const MainContainer = styled.div`
+const MainWrapper = styled.div`
   position: relative;
-  background: linear-gradient(117deg, #fa641e 0%, #ff881f 100%) 0% 0% no-repeat
+  background: linear-gradient(158deg, #fa641e 0%, #ff881f 100%) 0% 0% no-repeat
     padding-box padding-box transparent;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 16px;
+  width: 100%;
 `;
 
-const ContentContainer = styled.div`
-  display: flex;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  @media ${device.sm} {
-    align-items: center;
-    background-color: aqua;
+const Title = styled(Typography)`
+  color: #fff;
+  font-weight: 700;
+  font-size: 40px;
+  @media (max-width: 460px) {
+    font-size: 30px;
+  }
+  @media (max-width: 360px) {
+    font-size: 25px;
   }
 `;
 
-const Image = styled.img`
-  width: 100%;
-  @media ${device.xs} {
+const SubTitle = styled(Typography)`
+  color: #fff;
+  font-weight: 400;
+  font-size: 16px;
+  @media (max-width: 460px) {
+    font-size: 14px;
+  }
+  @media (max-width: 360px) {
+    font-size: 12px;
   }
 `;
 
-const ImageContainer = styled.div`
-  position: relative;
-  width: 100%;
-  ::before {
-    content: "";
-    position: absolute;
-    height: 70%;
-    width: 80%;
+const TextContainer = styled.div`
+  position: absolute;
+  width: 80%;
+  left: 0;
+  @media (max-width: 550px) {
+    top: 10px;
+  }
+  @media (max-width: 460px) {
+    width: 70%;
     top: 0;
-    right: 0;
-    padding-bottom: 100%;
-    background-image: url(${burguer2});
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    transform: translateY(-50%);
+  }
 
-    @media ${device.lg} {
-      height: 100%;
-      width: 100%;
-    }
-
-    @media ${device.md} {
-      padding-bottom: 80%;
-      height: 80%;
-      width: 80%;
-    }
-
-    @media ${device.sm} {
-      padding-bottom: 100%;
-      height: 100%;
-      width: 100%;
-      top: -30px;
-    }
-
-    @media ${device.xs} {
-      padding-bottom: 100%;
-      height: 100%;
-      width: 100%;
-      left: 0px;
-      right: 0;
-    }
+  @media (max-width: 360px) {
+    width: 70%;
+    top: 15px;
   }
 `;
 
 const FormContainer = styled.form`
   position: relative;
-  background-color: #ffffff;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin: 40px auto 90px auto;
+  margin: 20px auto 90px auto;
   max-width: 500px;
   border-radius: 32px;
   border: 1px solid #cccccc;
   padding: 0 24px 40px 24px;
+  @media (max-width: 600px) {
+    margin: 100px auto 90px auto;
+  }
+  @media (max-width: 460px) {
+    margin: 50px auto 90px auto;
+  }
+  @media (max-width: 360px) {
+    margin: 20px auto 90px auto;
+  }
 `;
 
 const FormTitle = styled.p`
@@ -175,29 +163,30 @@ export const FormSection = () => {
   };
 
   return (
-    <MainContainer>
+    <MainWrapper className="MAINWRAPPER">
       <Container>
-        <ContentContainer>
+        <Box
+          sx={{
+            position: "relative",
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            marginTop: "32px",
+          }}
+        >
           <TextContainer>
-            <Title
-              textColor="#fff"
-              fontWeight="700"
-              style={{ fontSize: "40px" }}
-            >
+            <Title variant="p" component="p">
               Pigz: tudo que você precisa pra vender ainda mais!
             </Title>
-            <Subtitle
-              textColor="#fff"
-              fontWeight="400"
-              style={{ fontSize: "16px" }}
-            >
+            <SubTitle variant="p" component="p">
               Temos uma equipe ansiosa para cadastrar seus produtos no Pigz
               Marketplace e deixar sua loja prontinha para iniciar as vendas.
-            </Subtitle>
+            </SubTitle>
           </TextContainer>
-          <ImageContainer />
-          {/* <Image src={burguer2} alt="Burguer" /> */}
-        </ContentContainer>
+          <Box sx={{ width: "144px" }}>
+            <img src={burguer2} alt="Burguer" />
+          </Box>
+        </Box>
         <FormContainer>
           {formStep === 1 && (
             <>
@@ -298,7 +287,7 @@ export const FormSection = () => {
                     name="numero"
                   />
                 </div>
-                <div style={{ flex: 2, marginLeft: "12px" }}>
+                <div style={{ marginLeft: "12px" }}>
                   <FormLabel htmlFor="complemento">Complemento</FormLabel>
                   <div style={{ display: "flex", flex: 1 }}>
                     <FormInput
@@ -353,6 +342,6 @@ export const FormSection = () => {
           <img src={pigzPigz} alt="Pigz-Pigz" />
         </AbsoluteImage>
       </Container>
-    </MainContainer>
+    </MainWrapper>
   );
 };
