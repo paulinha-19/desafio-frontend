@@ -2,14 +2,14 @@ import React from "react";
 import { Title, TextContainer } from "../../styles/Text";
 import { CardPigzdido, Container } from "../index";
 import { Informativo } from "../Informativo";
-import { cardButton } from "../../data/cardButton.";
+import { cardButton } from "../../data/cardButton.js";
 
 export const NovoPigzdido = () => {
   return (
     <Container>
       <TextContainer>
         <Title
-          textColor="#000"
+          textcolor="#000"
           fontWeight="700"
           style={{
             fontSize: "32px",
@@ -44,6 +44,7 @@ export const NovoPigzdido = () => {
         subtitle="Tenha todas as funcionalidades Pigz sem taxa de adesão, sem comissão por cada venda, sem letrinhas miúdas."
         marginTop="80px"
         marginBottom="20px"
+        
       />
     </Container>
   );

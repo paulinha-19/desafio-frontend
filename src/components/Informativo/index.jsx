@@ -19,6 +19,7 @@ export const Informativo = ({ title, subtitle, marginTop, marginBottom }) => {
             fontSize: "32px",
             marginTop: marginTop || 0,
             marginBottom: marginBottom || 0,
+            padding: "0 16px"
           }}
         >
           {title}

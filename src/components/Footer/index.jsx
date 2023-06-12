@@ -73,7 +73,7 @@ const Columns = styled.div`
 `;
 const TextFooter = styled(Typography)`
   font-weight: ${(props) => props.fontWeight};
-  color: ${(props) => props.textColor || "#676767"};
+  color: ${(props) => props.textcolor || "#676767"};
   font-size: ${(props) => props.fontSize};
   @media (max-width: 900px) {
     margin-bottom: 20px;
@@ -175,7 +175,7 @@ export const Footer = () => {
                   variant="p"
                   fontSize="14px"
                   fontWeight="400"
-                  textColor="#666666"
+                  textcolor="#666666"
                 >
                   Sobre o Pigz
                 </TextFooter>
@@ -190,7 +190,7 @@ export const Footer = () => {
                   variant="p"
                   fontSize="14px"
                   fontWeight="400"
-                  textColor="#666666"
+                  textcolor="#666666"
                 >
                   Portal do Parceiro{" "}
                 </TextFooter>
@@ -205,7 +205,7 @@ export const Footer = () => {
                   variant="p"
                   fontSize="14px"
                   fontWeight="400"
-                  textColor="#666666"
+                  textcolor="#666666"
                 >
                   Quero ser um Pigz Partner{" "}
                 </TextFooter>
@@ -314,7 +314,7 @@ export const Footer = () => {
                 variant="p"
                 fontSize="13px"
                 fontWeight="400"
-                textColor="#666666"
+                textcolor="#666666"
               >
                 Nossos termos
               </TextFooter>
@@ -323,7 +323,7 @@ export const Footer = () => {
                 variant="p"
                 fontSize="13px"
                 fontWeight="400"
-                textColor="#666666"
+                textcolor="#666666"
                 style={{ marginLeft: "25px" }}
               >
                 Privacidade
@@ -334,7 +334,7 @@ export const Footer = () => {
                 fontSize="13px"
                 fontWeight="400"
                 style={{ marginLeft: "25px" }}
-                textColor="#666666"
+                textcolor="#666666"
               >
                 Ajuda
               </TextFooter>
@@ -348,7 +348,7 @@ export const Footer = () => {
                   variant="p"
                   fontSize="13px"
                   fontWeight="400"
-                  textColor="#666666"
+                  textcolor="#666666"
                   style={{ marginRight: "20px" }}
                 >
                   © Copyright 2021 • Pigz • Todos os direitos reservados Orange

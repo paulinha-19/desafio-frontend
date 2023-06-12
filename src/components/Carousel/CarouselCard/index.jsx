@@ -25,7 +25,7 @@ export const CarouselCard = ({ title, subtitle, image }) => {
       <Title>{title}</Title>
       <CardWrapper>
         <CardContent>
-          <Subtitle textColor="#fff" style={{ margin: "0" }}>
+          <Subtitle textcolor="#fff" style={{ margin: "0" }}>
             {subtitle}
           </Subtitle>
         </CardContent>

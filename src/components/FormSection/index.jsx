@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import burguer2 from "../../assets/burguer_2.png";
 import pigzPigz from "../../assets/pigz-pigz.png";
-import brasil from "../../assets/flags/brazil.png";
-import usa from "../../assets/flags/usa.png";
+import { countryCodes } from "../../data/countryCodes";
+
 import {
   Container,
   Box,
@@ -116,6 +116,9 @@ const Input = styled.input`
   ::placeholder {
     color: #cccccc;
   }
+  &:focus {
+    outline: none;
+  }
   @media (max-width: 460px) {
     width: 93%;
   }
@@ -129,6 +132,9 @@ const Select = styled.select`
   color: 333333;
   font-size: 14px;
   width: 100% !important;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const FormButton = styled.button`
@@ -149,16 +155,11 @@ const AbsoluteImage = styled.div`
   left: 50%;
 `;
 
-const Icon = styled.i`
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  background-image: ${(props) => props.backgroundImage};
-  background-size: cover;
-`;
-
 export const FormSection = () => {
   const [formStep, setFormStep] = useState(1);
+  const [selectedCountryCode, setSelectedCountryCode] = useState(
+    countryCodes[0]
+  );
   const handleNextStep = () => {
     setFormStep(formStep + 1);
   };
@@ -169,13 +170,13 @@ export const FormSection = () => {
     } else {
     }
   };
-  const countryCodes = [
-    { code: "+55", flag: brasil },
-    { code: "+1", flag: usa },
-  ];
 
   const handleCountryCodeChange = (event) => {
-    // Handle country code selection here
+    const countryCode = event.target.value;
+    const selectedCountry = countryCodes.find(
+      (country) => country.code === countryCode
+    );
+    setSelectedCountryCode(selectedCountry);
   };
 
   return (
@@ -219,26 +220,33 @@ export const FormSection = () => {
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  alignItems: "center",
+                  borderRadius: "16px",
+                  border: "1px solid #999",
                 }}
               >
                 <Box
                   sx={{
                     display: "flex",
+                    flexDirection: "row",
                     alignItems: "center",
-                    justifyContent: "center",
-                    width: "150px",
+                    borderRadius: "16px",
+                    width: "180px",
+                    backgroundColor: "#F0F0F0",
+                    paddingLeft: "12px",
                   }}
                 >
+                  <img src={selectedCountryCode.flag} alt="flag" />
                   <Select
                     placeholder="Selecione"
                     id="telefone"
                     name="telefone"
                     required
                     defaultValue=""
+                    onChange={handleCountryCodeChange}
                     style={{
                       backgroundColor: "#F0F0F0",
-                      border: "transparent",
+                      border: "none",
+                      paddingLeft: "8px",
                     }}
                   >
                     {countryCodes.map((country) => (
@@ -253,6 +261,11 @@ export const FormSection = () => {
                   placeholder="(95) 99876-5432"
                   id="telefone"
                   name="telefone"
+                  style={{
+                    border: "transparent",
+                    width: "100%",
+                    paddingLeft: 8,
+                  }}
                 />
               </Box>
               <p
@@ -369,7 +382,6 @@ export const FormSection = () => {
                     id="cnpj-da-loja"
                   />
                 </Grid>
-
                 <Grid item xs={12}>
                   <Label htmlFor="tipo-de-loja">Tipo de loja</Label>
                   <Select

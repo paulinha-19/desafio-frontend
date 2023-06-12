@@ -3,12 +3,12 @@ import { device } from "./Breakpoints";
 
 export const Title = styled.p`
   font-weight: ${(props) => props.fontWeight || 400};
-  color: ${(props) => props.textColor || "#000"};
+  color: ${(props) => props.textcolor || "#000"};
 `;
 
 export const Subtitle = styled.p`
   font-weight: ${(props) => props.fontWeight || 400};
-  color: ${(props) => props.textColor || "#000"};
+  color: ${(props) => props.textcolor || "#000"};
   width: 100%;
 `;
 

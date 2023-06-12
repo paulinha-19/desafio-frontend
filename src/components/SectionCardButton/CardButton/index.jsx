@@ -20,6 +20,7 @@ const ButtonPreco = styled(Button)`
   margin-bottom: 25px;
   @media (max-width: 380px) {
     font-size: 18px;
+    padding: 10px 20px;
   }
 `;
 const ButtonContainer = styled.div`

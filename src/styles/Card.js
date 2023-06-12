@@ -15,7 +15,7 @@ export const Title = styled.p`
 export const Subtitle = styled.p`
   font-size: ${(props) => props.fontSize || 15};
   font-weight: ${(props) => props.fontWeight || 300};
-  color: ${(props) => props.textColor || "#666666"};
+  color: ${(props) => props.textcolor || "#666666"};
 `;
 
 export const CardContainer = styled(Box)`
