@@ -16,15 +16,7 @@ const Content = styled.p`
   font-weight: 400;
 `;
 
-const ButtonPreco = styled.button`
-  border: none !important;
-  background-color: #ffffff !important;
-  color: #333333;
-  font-size: 20px;
-  font-weight: 700;
-  border-radius: 32px;
-  text-align: center;
-  padding: 14px 24px;
+const ButtonPreco = styled(Button)`
   margin-bottom: 25px;
   @media (max-width: 380px) {
     font-size: 18px;
@@ -66,9 +58,27 @@ export const CardButton = ({
             </Content>
           ))}
         </div>
-        <ButtonPreco>{buttonPreco}</ButtonPreco>
+        <ButtonPreco
+          fontSize="20px"
+          padding="14px 24px"
+          background="#fff"
+          color="#333"
+          borderRadius="32px"
+          fontWeight="700"
+        >
+          {buttonPreco}
+        </ButtonPreco>
         <ButtonContainer>
-          <ResponsiveButton fontSize="16px" padding="17px 40px">
+          <ResponsiveButton
+            fontSize="16px"
+            padding="17px 40px"
+            background="linear-gradient(259deg, #fa641e 0%, #ff881f 100%) 0% 0% no-repeat
+    padding-box padding-box transparent"
+            color="#fff"
+            borderRadius="32px"
+            fontWeight="500"
+            boxShadow="0px 5px 10px #fa641ead"
+          >
             {buttonSecondary}
           </ResponsiveButton>
         </ButtonContainer>

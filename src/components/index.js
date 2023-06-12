@@ -6,4 +6,4 @@ export * from "./Informativo/index";
 export * from "./Carousel/index";
 export * from "./NovoPigzdido/CardPigzdido/index";
 export * from "./SectionCardButton/index";
-
+export * from "./Footer/index";

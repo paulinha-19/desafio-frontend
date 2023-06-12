@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
 
 export const CardContent = styled.div`
   padding: 40px;
@@ -18,7 +18,7 @@ export const Subtitle = styled.p`
   color: ${(props) => props.textColor || "#666666"};
 `;
 
-export const CardContainer = styled.div`
+export const CardContainer = styled(Box)`
   position: relative;
   width: 100%;
   max-width: 382px;

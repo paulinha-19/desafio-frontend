@@ -2,16 +2,23 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import burguer2 from "../../assets/burguer_2.png";
 import pigzPigz from "../../assets/pigz-pigz.png";
-import { Container, Box, Typography } from "@mui/material";
+import brasil from "../../assets/flags/brazil.png";
+import usa from "../../assets/flags/usa.png";
+import {
+  Container,
+  Box,
+  Typography,
+  Grid,
+  TextField,
+  MenuItem,
+} from "@mui/material";
 
 const MainWrapper = styled.div`
   position: relative;
   background: linear-gradient(158deg, #fa641e 0%, #ff881f 100%) 0% 0% no-repeat
     padding-box padding-box transparent;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  width: 100%;
 `;
 
 const Title = styled(Typography)`
@@ -56,7 +63,7 @@ const TextContainer = styled.div`
   }
 `;
 
-const FormContainer = styled.form`
+const Form = styled.form`
   position: relative;
   background-color: #fff;
   display: flex;
@@ -66,7 +73,7 @@ const FormContainer = styled.form`
   max-width: 500px;
   border-radius: 32px;
   border: 1px solid #cccccc;
-  padding: 0 24px 40px 24px;
+  padding: 10px 24px 40px 24px;
   @media (max-width: 600px) {
     margin: 100px auto 90px auto;
   }
@@ -90,20 +97,16 @@ const FormSubtitle = styled.p`
   color: #333333;
 `;
 
-const FormLabel = styled.label`
+const Label = styled.label`
   color: #333333;
   font-size: 12px;
   font-weight: 500;
-  margin-top: 24px;
+  margin-top: 15px;
+  display: block;
 `;
 
-const InputContainer = styled.div`
-  display: flex;
-  margin-top: 24px;
-`;
-
-const FormInput = styled.input`
-  display: flex;
+const Input = styled.input`
+  width: 96%;
   height: 48px;
   border-radius: 16px;
   border: 1px solid #999999;
@@ -113,22 +116,19 @@ const FormInput = styled.input`
   ::placeholder {
     color: #cccccc;
   }
-`;
-
-const SelectContainer = styled.div`
-  display: flex;
-  margin-top: 24px;
+  @media (max-width: 460px) {
+    width: 93%;
+  }
 `;
 
 const Select = styled.select`
   background: #ffffff;
   height: 48px;
   border-radius: 16px;
-  border: 1px solid #999999;
   padding-left: 16px;
-  color: #333333;
+  color: 333333;
   font-size: 14px;
-  width: 100%;
+  width: 100% !important;
 `;
 
 const FormButton = styled.button`
@@ -149,6 +149,14 @@ const AbsoluteImage = styled.div`
   left: 50%;
 `;
 
+const Icon = styled.i`
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: ${(props) => props.backgroundImage};
+  background-size: cover;
+`;
+
 export const FormSection = () => {
   const [formStep, setFormStep] = useState(1);
   const handleNextStep = () => {
@@ -160,6 +168,14 @@ export const FormSection = () => {
       setFormStep(1);
     } else {
     }
+  };
+  const countryCodes = [
+    { code: "+55", flag: brasil },
+    { code: "+1", flag: usa },
+  ];
+
+  const handleCountryCodeChange = (event) => {
+    // Handle country code selection here
   };
 
   return (
@@ -187,29 +203,58 @@ export const FormSection = () => {
             <img src={burguer2} alt="Burguer" />
           </Box>
         </Box>
-        <FormContainer>
+        <Form>
           {formStep === 1 && (
             <>
               <FormTitle>Quero vender no Pigz</FormTitle>
               <FormSubtitle>
                 Dê o primeiro passo para aumentar suas vendas
               </FormSubtitle>
-              <FormLabel htmlFor="nome">Nome</FormLabel>
-              <FormInput type="text" placeholder="Nome" id="nome" name="nome" />
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <FormInput
-                type="text"
-                placeholder="Email"
-                id="email"
-                name="email"
-              />
-              <FormLabel htmlFor="telefone">Telefone</FormLabel>
-              <FormInput
-                type="text"
-                placeholder="Telefone"
-                id="telefone"
-                name="telefone"
-              />
+              <Label htmlFor="nome">Nome</Label>
+              <Input type="text" placeholder="Nome" id="nome" name="nome" />
+              <Label htmlFor="email">Email</Label>
+              <Input type="email" placeholder="Email" id="email" name="email" />
+              <Label htmlFor="telefone">Telefone</Label>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "150px",
+                  }}
+                >
+                  <Select
+                    placeholder="Selecione"
+                    id="telefone"
+                    name="telefone"
+                    required
+                    defaultValue=""
+                    style={{
+                      backgroundColor: "#F0F0F0",
+                      border: "transparent",
+                    }}
+                  >
+                    {countryCodes.map((country) => (
+                      <option key={country.code} value={country.code}>
+                        {country.code}
+                      </option>
+                    ))}
+                  </Select>
+                </Box>
+                <Input
+                  type="tel"
+                  placeholder="(95) 99876-5432"
+                  id="telefone"
+                  name="telefone"
+                />
+              </Box>
               <p
                 style={{
                   textAlign: "left",
@@ -227,17 +272,18 @@ export const FormSection = () => {
           {formStep === 2 && (
             <>
               <FormTitle>Onde fica a sua loja?</FormTitle>
-              <FormLabel htmlFor="cep">CEP</FormLabel>
-              <FormInput
-                type="text"
-                placeholder="00000-00"
-                id="cep"
-                name="cep"
-              />
-
-              <SelectContainer>
-                <div style={{ flex: 1 }}>
-                  <FormLabel htmlFor="estado">Estado</FormLabel>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Label htmlFor="cep">CEP</Label>
+                  <Input
+                    type="text"
+                    placeholder="00000-00"
+                    id="cep"
+                    name="cep"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Label htmlFor="estado">Estado</Label>
                   <Select
                     placeholder="Selecione"
                     id="estado"
@@ -251,9 +297,9 @@ export const FormSection = () => {
                     <option value="SP">SP</option>
                     <option value="RR">RR</option>
                   </Select>
-                </div>
-                <div style={{ flex: 2, marginLeft: "12px" }}>
-                  <FormLabel htmlFor="cidade">Cidade</FormLabel>
+                </Grid>
+                <Grid item xs={6}>
+                  <Label htmlFor="cidade">Cidade</Label>
                   <Select
                     placeholder="Cidade"
                     id="cidade"
@@ -267,58 +313,65 @@ export const FormSection = () => {
                     <option value="São Paulo">São Paulo</option>
                     <option value="Boa Vista">Boa Vista</option>
                   </Select>
-                </div>
-              </SelectContainer>
-              <FormLabel htmlFor="endereco">Endereço</FormLabel>
-              <FormInput
-                type="text"
-                id="endereco"
-                name="endereco"
-                placeholder="Avenida Brasil"
-              />
-
-              <InputContainer>
-                <div style={{ flex: 1 }}>
-                  <FormLabel htmlFor="numero">Número</FormLabel>
-                  <FormInput
+                </Grid>
+                <Grid item xs={12}>
+                  <Label htmlFor="endereco">Endereço</Label>
+                  <Input
+                    type="text"
+                    id="endereco"
+                    name="endereco"
+                    placeholder="Avenida Brasil"
+                  />
+                </Grid>
+                <Grid item xs={6} pr={2}>
+                  <Label htmlFor="numero">Número</Label>
+                  <Input
                     type="number"
                     placeholder="123"
                     id="numero"
                     name="numero"
                   />
-                </div>
-                <div style={{ marginLeft: "12px" }}>
-                  <FormLabel htmlFor="complemento">Complemento</FormLabel>
-                  <div style={{ display: "flex", flex: 1 }}>
-                    <FormInput
-                      type="text"
-                      id="complemento"
-                      name="complemento"
-                      placeholder="Sala 1"
-                      style={{ width: "100%" }}
-                    />
-                  </div>
-                </div>
-              </InputContainer>
-
+                </Grid>
+                <Grid item xs={6}>
+                  <Label htmlFor="complemento">Complemento</Label>
+                  <Input
+                    type="text"
+                    id="complemento"
+                    name="complemento"
+                    placeholder="Sala 1"
+                  />
+                </Grid>
+              </Grid>
               <FormButton onClick={handleNextStep}>Próximo</FormButton>
             </>
           )}
           {formStep === 3 && (
             <>
               <FormTitle>Me conta um pouco sobre a sua loja</FormTitle>
-              <FormLabel htmlFor="nome-da-loja">Nome da loja</FormLabel>
-              <FormInput
-                type="text"
-                id="nome-da-loja"
-                name="nome-da-loja"
-                placeholder="Restaurante Todo Mundo Gosta"
-              />
-              <FormLabel htmlFor="cnpj-da-loja">CNPJ da loja</FormLabel>
-              <FormInput type="text" placeholder="12.345.678/0001-99" />
-              <SelectContainer>
-                <div style={{ flex: 1 }}>
-                  <FormLabel htmlFor="tipo-de-loja">Tipo de loja</FormLabel>
+
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Label htmlFor="nome-da-loja">Nome da loja</Label>
+                  <Input
+                    type="text"
+                    id="nome-da-loja"
+                    name="nome-da-loja"
+                    placeholder="Restaurante Todo Mundo Gosta"
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Label htmlFor="cnpj-da-loja">CNPJ da loja</Label>
+                  <Input
+                    type="text"
+                    placeholder="12.345.678/0001-99"
+                    name="cnpj-da-loja"
+                    id="cnpj-da-loja"
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Label htmlFor="tipo-de-loja">Tipo de loja</Label>
                   <Select
                     placeholder="Selecione"
                     id="tipo-de-loja"
@@ -332,12 +385,12 @@ export const FormSection = () => {
                     <option value="loja-a">Loja A</option>
                     <option value="loja-b">Loja B</option>
                   </Select>
-                </div>
-              </SelectContainer>
+                </Grid>
+              </Grid>
               <FormButton onClick={handleFinish}>Concluir</FormButton>
             </>
           )}
-        </FormContainer>
+        </Form>
         <AbsoluteImage>
           <img src={pigzPigz} alt="Pigz-Pigz" />
         </AbsoluteImage>

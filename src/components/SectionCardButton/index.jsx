@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   padding: 0 16px;
-  margin-top: 40px;
+  margin-top: 60px;
 `;
 
 const FaleComAPigz = styled.div`
@@ -20,6 +20,7 @@ const FaleComAPigz = styled.div`
   color: #333333;
   font-weight: 500;
   font-size: 16px;
+  margin-top: 20px;
 `;
 
 export const SectionCardButton = () => {
@@ -27,7 +28,16 @@ export const SectionCardButton = () => {
     <>
       <Wrapper>
         {contentCardButton.map((item, index) => (
-          <CardContainer height="100%" style={{ marginBottom: "40px" }}>
+          <CardContainer
+            height="100%"
+            sx={{
+              marginBottom: "40px",
+              paddingLeft: 2,
+              "@media (max-width: 680px)": {
+                paddingLeft: 0,
+              },
+            }}
+          >
             <CardButton
               key={index}
               title={item.title}

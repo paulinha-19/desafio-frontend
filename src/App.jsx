@@ -4,6 +4,7 @@ import {
   NovoPigzdido,
   Carousel,
   SectionCardButton,
+  Footer,
 } from "./components/index";
 import GlobalStyle from "./styles/Global";
 
@@ -16,6 +17,7 @@ function App() {
       <NovoPigzdido />
       <Carousel />
       <SectionCardButton />
+      <Footer />
     </>
   );
 }
