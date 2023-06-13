@@ -2,16 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import burguer2 from "../../assets/burguer_2.png";
 import pigzPigz from "../../assets/pigz-pigz.png";
+import sucess from "../../assets/check.png";
 import { countryCodes } from "../../data/countryCodes";
-
-import {
-  Container,
-  Box,
-  Typography,
-  Grid,
-  TextField,
-  MenuItem,
-} from "@mui/material";
+import { formStepSchema } from "../../validation/index";
+import { Container, Box, Typography, Grid } from "@mui/material";
+import { FormStep1 } from "./Steps";
 
 const MainWrapper = styled.div`
   position: relative;
@@ -155,22 +150,31 @@ const AbsoluteImage = styled.div`
   left: 50%;
 `;
 
+const initialValues = {
+  nome: "",
+  email: "",
+  telefone: "",
+  cep: "",
+  estado: "",
+  cidade: "",
+  endereco: "",
+  numero: "",
+  complemento: "",
+  nomeDaLoja: "",
+  cnpj: "",
+  tipoDeLoja: "",
+};
+
 export const FormSection = () => {
   const [formStep, setFormStep] = useState(1);
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
   const [selectedCountryCode, setSelectedCountryCode] = useState(
     countryCodes[0]
   );
   const handleNextStep = () => {
-    setFormStep(formStep + 1);
+    setFormStep((prevStep) => prevStep + 1);
   };
-  const handleFinish = () => {
-    const dadosValidos = true;
-    if (dadosValidos) {
-      setFormStep(1);
-    } else {
-    }
-  };
-
   const handleCountryCodeChange = (event) => {
     const countryCode = event.target.value;
     const selectedCountry = countryCodes.find(
@@ -178,9 +182,21 @@ export const FormSection = () => {
     );
     setSelectedCountryCode(selectedCountry);
   };
-
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  };
+  const handleFinish = () => {
+    setFormStep(1);
+  };
   return (
-    <MainWrapper className="MAINWRAPPER">
+    <MainWrapper>
       <Container>
         <Box
           sx={{
@@ -204,82 +220,15 @@ export const FormSection = () => {
             <img src={burguer2} alt="Burguer" />
           </Box>
         </Box>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           {formStep === 1 && (
             <>
-              <FormTitle>Quero vender no Pigz</FormTitle>
-              <FormSubtitle>
-                Dê o primeiro passo para aumentar suas vendas
-              </FormSubtitle>
-              <Label htmlFor="nome">Nome</Label>
-              <Input type="text" placeholder="Nome" id="nome" name="nome" />
-              <Label htmlFor="email">Email</Label>
-              <Input type="email" placeholder="Email" id="email" name="email" />
-              <Label htmlFor="telefone">Telefone</Label>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  borderRadius: "16px",
-                  border: "1px solid #999",
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    borderRadius: "16px",
-                    width: "180px",
-                    backgroundColor: "#F0F0F0",
-                    paddingLeft: "12px",
-                  }}
-                >
-                  <img src={selectedCountryCode.flag} alt="flag" />
-                  <Select
-                    placeholder="Selecione"
-                    id="telefone"
-                    name="telefone"
-                    required
-                    defaultValue=""
-                    onChange={handleCountryCodeChange}
-                    style={{
-                      backgroundColor: "#F0F0F0",
-                      border: "none",
-                      paddingLeft: "8px",
-                    }}
-                  >
-                    {countryCodes.map((country) => (
-                      <option key={country.code} value={country.code}>
-                        {country.code}
-                      </option>
-                    ))}
-                  </Select>
-                </Box>
-                <Input
-                  type="tel"
-                  placeholder="(95) 99876-5432"
-                  id="telefone"
-                  name="telefone"
-                  style={{
-                    border: "transparent",
-                    width: "100%",
-                    paddingLeft: 8,
-                  }}
-                />
-              </Box>
-              <p
-                style={{
-                  textAlign: "left",
-                  color: "#666666",
-                  fontSize: "13px",
-                  marginTop: "20px",
-                }}
-              >
-                Ao continuar, aceito que a Pigz entre em contato comigo por
-                telefone, e-mail ou WhatsApp.
-              </p>
-              <FormButton onClick={handleNextStep}>Continuar</FormButton>
+              <FormStep1
+                handleNextStep={handleNextStep}
+                handleChange={handleChange}
+                formValues={formValues}
+                formErrors={formErrors}
+              />
             </>
           )}
           {formStep === 2 && (
@@ -293,7 +242,10 @@ export const FormSection = () => {
                     placeholder="00000-00"
                     id="cep"
                     name="cep"
+                    value={formValues.cep}
+                    onChange={handleChange}
                   />
+                  {formErrors.cep && <p>{formErrors.cep}</p>}
                 </Grid>
                 <Grid item xs={6}>
                   <Label htmlFor="estado">Estado</Label>
@@ -302,7 +254,8 @@ export const FormSection = () => {
                     id="estado"
                     name="estado"
                     required
-                    value=""
+                    onChange={handleChange}
+                    value={formValues.estado}
                   >
                     <option value="" disabled>
                       UF
@@ -310,6 +263,7 @@ export const FormSection = () => {
                     <option value="SP">SP</option>
                     <option value="RR">RR</option>
                   </Select>
+                  {formErrors.estado && <p>{formErrors.estado}</p>}
                 </Grid>
                 <Grid item xs={6}>
                   <Label htmlFor="cidade">Cidade</Label>
@@ -318,7 +272,8 @@ export const FormSection = () => {
                     id="cidade"
                     name="cidade"
                     required
-                    value=""
+                    value={formValues.cidade}
+                    onChange={handleChange}
                   >
                     <option value="" disabled>
                       Selecione
@@ -326,6 +281,7 @@ export const FormSection = () => {
                     <option value="São Paulo">São Paulo</option>
                     <option value="Boa Vista">Boa Vista</option>
                   </Select>
+                  {formErrors.cidade && <p>{formErrors.cidade}</p>}
                 </Grid>
                 <Grid item xs={12}>
                   <Label htmlFor="endereco">Endereço</Label>
@@ -334,7 +290,10 @@ export const FormSection = () => {
                     id="endereco"
                     name="endereco"
                     placeholder="Avenida Brasil"
+                    value={formValues.endereco}
+                    onChange={handleChange}
                   />
+                  {formErrors.endereco && <p>{formErrors.endereco}</p>}
                 </Grid>
                 <Grid item xs={6} pr={2}>
                   <Label htmlFor="numero">Número</Label>
@@ -343,7 +302,10 @@ export const FormSection = () => {
                     placeholder="123"
                     id="numero"
                     name="numero"
+                    value={formValues.numero}
+                    onChange={handleChange}
                   />
+                  {formErrors.numero && <p>{formErrors.numero}</p>}
                 </Grid>
                 <Grid item xs={6}>
                   <Label htmlFor="complemento">Complemento</Label>
@@ -352,7 +314,10 @@ export const FormSection = () => {
                     id="complemento"
                     name="complemento"
                     placeholder="Sala 1"
+                    value={formValues.complemento}
+                    onChange={handleChange}
                   />
+                  {formErrors.complemento && <p>{formErrors.complemento}</p>}
                 </Grid>
               </Grid>
               <FormButton onClick={handleNextStep}>Próximo</FormButton>
@@ -361,35 +326,40 @@ export const FormSection = () => {
           {formStep === 3 && (
             <>
               <FormTitle>Me conta um pouco sobre a sua loja</FormTitle>
-
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Label htmlFor="nome-da-loja">Nome da loja</Label>
+                  <Label htmlFor="nomeDaLoja">Nome da loja</Label>
                   <Input
                     type="text"
-                    id="nome-da-loja"
-                    name="nome-da-loja"
+                    id="nomeDaLoja"
+                    name="nomeDaLoja"
                     placeholder="Restaurante Todo Mundo Gosta"
+                    value={formValues.nomeDaLoja}
+                    onChange={handleChange}
                   />
+                  {formErrors.nomeDaLoja && <p>{formErrors.nomeDaLoja}</p>}
                 </Grid>
-
                 <Grid item xs={12}>
-                  <Label htmlFor="cnpj-da-loja">CNPJ da loja</Label>
+                  <Label htmlFor="cnpj">CNPJ da loja</Label>
                   <Input
                     type="text"
                     placeholder="12.345.678/0001-99"
-                    name="cnpj-da-loja"
-                    id="cnpj-da-loja"
+                    name="cnpj"
+                    id="cnpj"
+                    value={formValues.cnpj}
+                    onChange={handleChange}
                   />
+                  {formErrors.cnpj && <p>{formErrors.cnpj}</p>}
                 </Grid>
                 <Grid item xs={12}>
-                  <Label htmlFor="tipo-de-loja">Tipo de loja</Label>
+                  <Label htmlFor="tipoDeLoja">Tipo de loja</Label>
                   <Select
                     placeholder="Selecione"
-                    id="tipo-de-loja"
-                    name="tipo-de-loja"
+                    id="tipoDeLoja"
+                    name="tipoDeLoja"
                     required
-                    value=""
+                    value={formValues.tipoDeLoja}
+                    onChange={handleChange}
                   >
                     <option value="" disabled>
                       Selecione
@@ -397,9 +367,35 @@ export const FormSection = () => {
                     <option value="loja-a">Loja A</option>
                     <option value="loja-b">Loja B</option>
                   </Select>
+                  {formErrors.tipoDeLoja && <p>{formErrors.tipoDeLoja}</p>}
                 </Grid>
               </Grid>
-              <FormButton onClick={handleFinish}>Concluir</FormButton>
+              <FormButton type="submit" onClick={handleNextStep}>
+                Concluir
+              </FormButton>
+            </>
+          )}
+          {formStep === 4 && (
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <img
+                  src={sucess}
+                  alt="Sucesos ao submter os dados do formulário"
+                  width="100px"
+                  height="100px"
+                />
+                <Typography variant="p" component="p" sx={{ fontSize: "20px" }}>
+                  Dados enviados
+                </Typography>
+                <SubTitle>Em breve entraremos em contato!</SubTitle>
+              </Box>
+              <FormButton onClick={handleFinish}>Finalizar</FormButton>
             </>
           )}
         </Form>
