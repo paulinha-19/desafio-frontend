@@ -4,9 +4,12 @@ import burguer2 from "../../assets/burguer_2.png";
 import pigzPigz from "../../assets/pigz-pigz.png";
 import sucess from "../../assets/check.png";
 import { countryCodes } from "../../data/countryCodes";
-import { formStepSchema } from "../../validation/index";
+import {
+  firstStepSchema,
+  secondStepSchema,
+  thirdStepSchema,
+} from "../../validation/index";
 import { Container, Box, Typography, Grid } from "@mui/material";
-import { FormStep1 } from "./Steps";
 
 const MainWrapper = styled.div`
   position: relative;
@@ -93,7 +96,7 @@ const FormSubtitle = styled.p`
 `;
 
 const Label = styled.label`
-  color: #333333;
+  color: ${(props) => (props.errorLabel ? "red" : "#333333")};
   font-size: 12px;
   font-weight: 500;
   margin-top: 15px;
@@ -104,7 +107,7 @@ const Input = styled.input`
   width: 96%;
   height: 48px;
   border-radius: 16px;
-  border: 1px solid #999999;
+  border: 1px solid ${(props) => (props.errorInput ? "red" : "black")};
   padding-left: 16px;
   color: #333333;
   font-size: 14px;
@@ -150,7 +153,13 @@ const AbsoluteImage = styled.div`
   left: 50%;
 `;
 
-const initialValues = {
+const ErrorMessage = styled.span`
+  color: red;
+  font-size: 10px;
+  margin-top: 5px;
+`;
+
+const initialValue = {
   nome: "",
   email: "",
   telefone: "",
@@ -167,14 +176,36 @@ const initialValues = {
 
 export const FormSection = () => {
   const [formStep, setFormStep] = useState(1);
-  const [formValues, setFormValues] = useState(initialValues);
+  const [formValues, setFormValues] = useState(initialValue);
   const [formErrors, setFormErrors] = useState({});
   const [selectedCountryCode, setSelectedCountryCode] = useState(
     countryCodes[0]
   );
-  const handleNextStep = () => {
-    setFormStep((prevStep) => prevStep + 1);
+  const getFieldValue = (fieldName) => formValues[fieldName] || "";
+  const handleNextStep = async (e) => {
+    e.preventDefault();
+    let schema;
+    if (formStep === 1) {
+      schema = firstStepSchema;
+    } else {
+      formStep === 2;
+      schema = secondStepSchema;
+    }
+    await schema
+      .validate(formValues, { abortEarly: false })
+      .then(() => {
+        setFormErrors({});
+        setFormStep((prevStep) => prevStep + 1);
+      })
+      .catch((err) => {
+        const errors = {};
+        err.inner.forEach((error) => {
+          errors[error.path] = error.message;
+        });
+        setFormErrors(errors);
+      });
   };
+
   const handleCountryCodeChange = (event) => {
     const countryCode = event.target.value;
     const selectedCountry = countryCodes.find(
@@ -191,10 +222,29 @@ export const FormSection = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const schema = thirdStepSchema;
+    await schema
+      .validate(formValues, { abortEarly: false })
+      .then(() => {
+        console.log("DADOS ENVIADOS: ", formValues);
+        setFormStep((prevStep) => prevStep + 1);
+        setFormValues({});
+        setFormErrors({});
+      })
+      .catch((err) => {
+        const errors = {};
+        err.inner.forEach((error) => {
+          errors[error.path] = error.message;
+        });
+        setFormErrors(errors);
+      });
   };
   const handleFinish = () => {
     setFormStep(1);
+    setFormValues({});
+    setFormErrors({});
   };
+
   return (
     <MainWrapper>
       <Container>
@@ -220,15 +270,115 @@ export const FormSection = () => {
             <img src={burguer2} alt="Burguer" />
           </Box>
         </Box>
-        <Form onSubmit={handleSubmit}>
+        <Form>
           {formStep === 1 && (
             <>
-              <FormStep1
-                handleNextStep={handleNextStep}
-                handleChange={handleChange}
-                formValues={formValues}
-                formErrors={formErrors}
+              <FormTitle>Quero vender no Pigz</FormTitle>
+              <FormSubtitle>
+                Dê o primeiro passo para aumentar suas vendas
+              </FormSubtitle>
+              <Label htmlFor="nome" errorLabel={!!formErrors.nome}>
+                Nome
+              </Label>
+              <Input
+                type="text"
+                placeholder="Nome"
+                id="nome"
+                name="nome"
+                value={getFieldValue("nome")}
+                onChange={handleChange}
               />
+              {formErrors.nome && (
+                <ErrorMessage>{formErrors.nome}</ErrorMessage>
+              )}
+              <Label htmlFor="email" errorLabel={!!formErrors.email}>
+                Email
+              </Label>
+              <Input
+                type="email"
+                placeholder="Email"
+                id="email"
+                name="email"
+                value={getFieldValue("email")}
+                onChange={handleChange}
+              />
+              {formErrors.email && (
+                <ErrorMessage>{formErrors.email}</ErrorMessage>
+              )}
+              <Label htmlFor="telefone" errorLabel={!!formErrors.telefone}>
+                Telefone
+              </Label>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  borderRadius: "16px",
+                  border: "1px solid #999",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    borderRadius: "16px",
+                    width: "180px",
+                    backgroundColor: "#F0F0F0",
+                    paddingLeft: "12px",
+                  }}
+                >
+                  <img src={selectedCountryCode.flag} alt="flag" />
+                  <Select
+                    placeholder="Selecione"
+                    id="countryCode"
+                    name="countryCode"
+                    required
+                    defaultValue=""
+                    onChange={handleCountryCodeChange}
+                    style={{
+                      backgroundColor: "#F0F0F0",
+                      border: "none",
+                      paddingLeft: "8px",
+                    }}
+                  >
+                    {countryCodes.map((country) => (
+                      <option key={country.code} value={country.code}>
+                        {country.code}
+                      </option>
+                    ))}
+                  </Select>
+                </Box>
+                <Input
+                  type="tel"
+                  placeholder="(95) 99876-5432"
+                  id="telefone"
+                  name="telefone"
+                  maxLength="11"
+                  minLength="11"
+                  value={getFieldValue("telefone")}
+                  onChange={handleChange}
+                  style={{
+                    border: "transparent",
+                    width: "100%",
+                    paddingLeft: 8,
+                  }}
+                />
+              </Box>
+              {formErrors.telefone && (
+                <ErrorMessage>{formErrors.telefone}</ErrorMessage>
+              )}
+              <p
+                style={{
+                  textAlign: "left",
+                  color: "#666666",
+                  fontSize: "13px",
+                  marginTop: "20px",
+                }}
+              >
+                Ao continuar, aceito que a Pigz entre em contato comigo por
+                telefone, e-mail ou WhatsApp.
+              </p>
+              <FormButton onClick={handleNextStep}>Continuar</FormButton>
             </>
           )}
           {formStep === 2 && (
@@ -236,26 +386,34 @@ export const FormSection = () => {
               <FormTitle>Onde fica a sua loja?</FormTitle>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Label htmlFor="cep">CEP</Label>
+                  <Label htmlFor="cep" errorLabel={!!formErrors.cep}>
+                    CEP
+                  </Label>
                   <Input
                     type="text"
-                    placeholder="00000-00"
+                    placeholder="00000-000"
                     id="cep"
+                    minLength="9"
+                    maxLength="9"
                     name="cep"
-                    value={formValues.cep}
+                    value={getFieldValue("cep")}
                     onChange={handleChange}
                   />
-                  {formErrors.cep && <p>{formErrors.cep}</p>}
+                  {formErrors.cep && (
+                    <ErrorMessage>{formErrors.cep}</ErrorMessage>
+                  )}
                 </Grid>
                 <Grid item xs={6}>
-                  <Label htmlFor="estado">Estado</Label>
+                  <Label htmlFor="estado" errorLabel={!!formErrors.estado}>
+                    Estado
+                  </Label>
                   <Select
                     placeholder="Selecione"
                     id="estado"
                     name="estado"
                     required
                     onChange={handleChange}
-                    value={formValues.estado}
+                    value={getFieldValue("estado")}
                   >
                     <option value="" disabled>
                       UF
@@ -263,16 +421,20 @@ export const FormSection = () => {
                     <option value="SP">SP</option>
                     <option value="RR">RR</option>
                   </Select>
-                  {formErrors.estado && <p>{formErrors.estado}</p>}
+                  {formErrors.estado && (
+                    <ErrorMessage>{formErrors.estado}</ErrorMessage>
+                  )}
                 </Grid>
                 <Grid item xs={6}>
-                  <Label htmlFor="cidade">Cidade</Label>
+                  <Label htmlFor="cidade" errorLabel={!!formErrors.cidade}>
+                    Cidade
+                  </Label>
                   <Select
                     placeholder="Cidade"
                     id="cidade"
                     name="cidade"
                     required
-                    value={formValues.cidade}
+                    value={getFieldValue("cidade")}
                     onChange={handleChange}
                   >
                     <option value="" disabled>
@@ -281,43 +443,60 @@ export const FormSection = () => {
                     <option value="São Paulo">São Paulo</option>
                     <option value="Boa Vista">Boa Vista</option>
                   </Select>
-                  {formErrors.cidade && <p>{formErrors.cidade}</p>}
+                  {formErrors.cidade && (
+                    <ErrorMessage>{formErrors.cidade}</ErrorMessage>
+                  )}
                 </Grid>
                 <Grid item xs={12}>
-                  <Label htmlFor="endereco">Endereço</Label>
+                  <Label htmlFor="endereco" errorLabel={!!formErrors.endereco}>
+                    Endereço
+                  </Label>
                   <Input
                     type="text"
                     id="endereco"
                     name="endereco"
                     placeholder="Avenida Brasil"
-                    value={formValues.endereco}
+                    value={getFieldValue("endereco")}
                     onChange={handleChange}
                   />
-                  {formErrors.endereco && <p>{formErrors.endereco}</p>}
+                  {formErrors.endereco && (
+                    <ErrorMessage>{formErrors.endereco}</ErrorMessage>
+                  )}
                 </Grid>
                 <Grid item xs={6} pr={2}>
-                  <Label htmlFor="numero">Número</Label>
+                  <Label htmlFor="numero" errorLabel={!!formErrors.numero}>
+                    Número
+                  </Label>
                   <Input
-                    type="number"
+                    type="text"
                     placeholder="123"
                     id="numero"
                     name="numero"
-                    value={formValues.numero}
+                    value={getFieldValue("numero")}
                     onChange={handleChange}
                   />
-                  {formErrors.numero && <p>{formErrors.numero}</p>}
+                  {formErrors.numero && (
+                    <ErrorMessage>{formErrors.numero}</ErrorMessage>
+                  )}
                 </Grid>
                 <Grid item xs={6}>
-                  <Label htmlFor="complemento">Complemento</Label>
+                  <Label
+                    htmlFor="complemento"
+                    errorLabel={!!formErrors.complemento}
+                  >
+                    Complemento
+                  </Label>
                   <Input
                     type="text"
                     id="complemento"
                     name="complemento"
                     placeholder="Sala 1"
-                    value={formValues.complemento}
+                    value={getFieldValue("complemento")}
                     onChange={handleChange}
                   />
-                  {formErrors.complemento && <p>{formErrors.complemento}</p>}
+                  {formErrors.complemento && (
+                    <ErrorMessage>{formErrors.complemento}</ErrorMessage>
+                  )}
                 </Grid>
               </Grid>
               <FormButton onClick={handleNextStep}>Próximo</FormButton>
@@ -328,37 +507,53 @@ export const FormSection = () => {
               <FormTitle>Me conta um pouco sobre a sua loja</FormTitle>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Label htmlFor="nomeDaLoja">Nome da loja</Label>
+                  <Label
+                    htmlFor="nomeDaLoja"
+                    errorLabel={!!formErrors.nomeDaLoja}
+                  >
+                    Nome da loja
+                  </Label>
                   <Input
                     type="text"
                     id="nomeDaLoja"
                     name="nomeDaLoja"
                     placeholder="Restaurante Todo Mundo Gosta"
-                    value={formValues.nomeDaLoja}
+                    value={getFieldValue("nomeDaLoja")}
                     onChange={handleChange}
                   />
-                  {formErrors.nomeDaLoja && <p>{formErrors.nomeDaLoja}</p>}
+                  {formErrors.nomeDaLoja && (
+                    <ErrorMessage>{formErrors.nomeDaLoja}</ErrorMessage>
+                  )}
                 </Grid>
                 <Grid item xs={12}>
-                  <Label htmlFor="cnpj">CNPJ da loja</Label>
+                  <Label htmlFor="cnpj" errorLabel={!!formErrors.cnpj}>
+                    CNPJ da loja
+                  </Label>
                   <Input
                     type="text"
                     placeholder="12.345.678/0001-99"
                     name="cnpj"
                     id="cnpj"
-                    value={formValues.cnpj}
+                    value={getFieldValue("cnpj")}
                     onChange={handleChange}
                   />
-                  {formErrors.cnpj && <p>{formErrors.cnpj}</p>}
+                  {formErrors.cnpj && (
+                    <ErrorMessage>{formErrors.cnpj}</ErrorMessage>
+                  )}
                 </Grid>
                 <Grid item xs={12}>
-                  <Label htmlFor="tipoDeLoja">Tipo de loja</Label>
+                  <Label
+                    htmlFor="tipoDeLoja"
+                    errorLabel={!!formErrors.tipoDeLoja}
+                  >
+                    Tipo de loja
+                  </Label>
                   <Select
                     placeholder="Selecione"
                     id="tipoDeLoja"
                     name="tipoDeLoja"
                     required
-                    value={formValues.tipoDeLoja}
+                    value={getFieldValue("tipoDeLoja")}
                     onChange={handleChange}
                   >
                     <option value="" disabled>
@@ -367,10 +562,12 @@ export const FormSection = () => {
                     <option value="loja-a">Loja A</option>
                     <option value="loja-b">Loja B</option>
                   </Select>
-                  {formErrors.tipoDeLoja && <p>{formErrors.tipoDeLoja}</p>}
+                  {formErrors.tipoDeLoja && (
+                    <ErrorMessage>{formErrors.tipoDeLoja}</ErrorMessage>
+                  )}
                 </Grid>
               </Grid>
-              <FormButton type="submit" onClick={handleNextStep}>
+              <FormButton type="submit" onClick={handleSubmit}>
                 Concluir
               </FormButton>
             </>
